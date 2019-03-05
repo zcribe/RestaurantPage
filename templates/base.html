@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pannkoogid</title>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" />
+    <link rel="stylesheet" type="text/css" href="{% static "css/project.css" %}">
+
+    <link href="https://fonts.googleapis.com/css?family=Cabin" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+
+</head>
+<body>
+    <a href="#navbar"><img src="{% static "images/pankoogid_ratas.svg" %}" alt="pancakes_icon" id="navbar-image"></a>
+    <div id="navbar" class="w-100">
+        <div id="navigation">
+            <div class="row mb-3 align-content-end">{% csrf_token %}<input class="form-control ml-auto" type="search" placeholder="Otsing" aria-label="Search"></div>
+            <div class="row mb-3 align-content-end"><a href="#description"><button type="button" id="navbar-button-description" class="btn btn-primary">Veidi meie restoranist</button></a></div>
+            <div class="row"><a href="#menu"><button type="button" class="btn btn-secondary">Maiuspalade menüü</button></a></div>
+        </div>
+    </div>
+
+    {% block content %}
+    {% endblock content %}
+
+    <div id="footer">
+        <p id="footer-center" class="title-font">
+            <a href="">01234567</a>
+            <span class="ml-1 mr-1">|</span>
+            <a href="">Email</a>
+            <span class="ml-1 mr-1">|</span>
+            <a href="">Privacy policy</a>
+        </p>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    {% block javascript %}
+    {% endblock %}
+</body>
+</html>

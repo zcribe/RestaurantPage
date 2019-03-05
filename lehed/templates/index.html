@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+    <div id="map" class="container-fluid h-100">
+        <div class="nav-arrow"><a href="#description"><i class="fas fa-arrow-circle-down fa-3x nav-icon"></i></a></div>
+    </div>
+
+
+    <div id="description" class="container-fluid h-100">
+        <table id="description-table" class="h-100 w-50 mx-auto">
+            <tbody>
+                <tr>
+                    <td class="pr-5 text-secondary"><button type="button" class="btn btn-secondary"><i class="fas fa-arrow-left fa-2x"></i></button></td>
+                    <td><p id="description-title">Parimad koogid sünnivad siin</p><p id="description-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, aliquid architecto cupiditate eos error expedita facere, incidunt inventore iure officia unde voluptatibus voluptatum. Commodi, expedita nam pariatur saepe tenetur vero!</p></td>
+                    <td class="pl-5 text-secondary"><button type="button" class="btn btn-secondary"><i class="fas fa-arrow-right fa-2x"></i></button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    {% for category in menuitemcategory_list %}
+    <div class="container-fluid h-100 menu {% cycle 'even' 'odd' %}">
+        <div class="nav-arrow"><a href="#description" ><i class="fas fa-arrow-circle-up fa-3x nav-icon"></i></a></div>
+        <div class="row">
+            <div class="col-6">
+                <img src="{% static "images/pannkook.svg" %}" alt="" class="img-fluid">
+            </div>
+            <div class="col-6">
+                <table class="h-100 w-75">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <span class="title-font item-title">{{ category.title }}</span>
+                                <table class=" w-75 menu-table">
+                                    <tbody>
+                                        {% for item in category.menuitem_set.all %}
+                                        <tr><td class="item-food-title">{{ item.title }}</td>
+                                            <td class="item-price">{{ item.price }}€</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>
+    </div>
+    {% endfor %}
+
+
+{% endblock content %}
+{% block javascript %}
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+    <script src="{% static "js/leaflet-providers.js" %}"></script>
+    <script>
+        var map = L.map('map',{
+            scrollWheelZoom: false,
+            layers:[]
+        }).setView([59.426962, 24.741554], 14);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        L.marker([59.443573, 24.73144]).addTo(map)
+            .bindPopup('Pärnu maantee 146, Tallinn')
+            .openPopup();
+        L.marker([59.412264, 24.73559]).addTo(map)
+            .bindPopup('Tondi 17, Tallinn')
+            .openPopup();
+        L.tileLayer.provider('Stamen.TonerLite').addTo(map);
+    </script>
+{% endblock javascript %}
