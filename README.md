@@ -6,6 +6,7 @@ Custom pancake mascot was created to drive the core design and add the fun and f
 * Short description
 * Menu
 
+Live democan be seen here [here](https://zcribe.github.io/RestaurantPage/index.html).
 
 Quickview screenshots:
 
@@ -16,4 +17,4 @@ Quickview screenshots:
 
 
 
-Live democan be seen here [here](https://zcribe.github.io/RestaurantPage/index.html). 
+
