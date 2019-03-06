@@ -1,105 +1,30 @@
 <!DOCTYPE html>
-<html class="gr__127_0_0_1" lang="en"><head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <title>Pannkoogid</title>
 
-    <link rel="stylesheet" href="Pannkoogid_files/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-    <link rel="stylesheet" href="Pannkoogid_files/leaflet.css">
-    <link rel="stylesheet" type="text/css" href="Pannkoogid_files/project.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" />
+    <link rel="stylesheet" type="text/css" href="static/css/project.css">
 
-    <link href="Pannkoogid_files/css.css" rel="stylesheet">
-    <link href="Pannkoogid_files/css_002.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cabin" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 
-<script type="text/javascript">// Promises 
-var _eid_promises = {}; 
-// Turn the incoming message from extension 
-// into pending Promise resolving 
-window.addEventListener("message", function(event) { 
-    if(event.source !== window) return; 
-    if(event.data.src && (event.data.src === "background.js")) { 
-        console.log("Page received: "); 
-        console.log(event.data); 
-        // Get the promise 
-        if(event.data.nonce) { 
-            var p = _eid_promises[event.data.nonce]; 
-            // resolve 
-            if(event.data.result === "ok") { 
-                if(event.data.signature !== undefined) { 
-                    p.resolve({hex: event.data.signature}); 
-                } else if(event.data.version !== undefined) { 
-                    p.resolve(event.data.extension + "/" + event.data.version); 
-                } else if(event.data.cert !== undefined) { 
-                    p.resolve({hex: event.data.cert}); 
-                } else { 
-                    console.log("No idea how to handle message"); 
-                    console.log(event.data); 
-                } 
-            } else { 
-                // reject 
-                p.reject(new Error(event.data.result)); 
-            } 
-            delete _eid_promises[event.data.nonce]; 
-        } else { 
-            console.log("No nonce in event msg"); 
-        } 
-    } 
-}, false); 
- 
- 
-function TokenSigning() { 
-    function nonce() { 
-        var val = ""; 
-        var hex = "abcdefghijklmnopqrstuvwxyz0123456789"; 
-        for(var i = 0; i < 16; i++) val += hex.charAt(Math.floor(Math.random() * hex.length)); 
-        return val; 
-    } 
- 
-    function messagePromise(msg) { 
-        return new Promise(function(resolve, reject) { 
-            // amend with necessary metadata 
-            msg["nonce"] = nonce(); 
-            msg["src"] = "page.js"; 
-            // send message 
-            window.postMessage(msg, "*"); 
-            // and store promise callbacks 
-            _eid_promises[msg.nonce] = { 
-                resolve: resolve, 
-                reject: reject 
-            }; 
-        }); 
-    } 
-    this.getCertificate = function(options) { 
-        var msg = {type: "CERT", lang: options.lang, filter: options.filter}; 
-        console.log("getCertificate()"); 
-        return messagePromise(msg); 
-    }; 
-    this.sign = function(cert, hash, options) { 
-        var msg = {type: "SIGN", cert: cert.hex, hash: hash.hex, hashtype: hash.type, lang: options.lang, info: options.info}; 
-        console.log("sign()"); 
-        return messagePromise(msg); 
-    }; 
-    this.getVersion = function() { 
-        console.log("getVersion()"); 
-        return messagePromise({ 
-            type: "VERSION" 
-        }); 
-    }; 
-}</script></head>
-<body data-gr-c-s-loaded="true">
-    <a href="#navbar"><img src="Pannkoogid_files/pankoogid_ratas2.svg" alt="pancakes_icon" id="navbar-image"></a>
+</head>
+<body>
+    <a href="#navbar"><img src="static/images/pankoogid_ratas2.svg" alt="pancakes_icon" id="navbar-image"></a>
     <div id="navbar" class="w-100">
         <div id="navigation">
-            <div class="row mb-3 align-content-end"><input type="hidden" name="csrfmiddlewaretoken" value="NcZKtYIh0m3Yh6wZhiDOUZCt1NaL1wp6duVvCcDyFVVd86ks2FRG96Jk3f8kiTP9"><input class="form-control ml-auto" type="search" placeholder="Otsing" aria-label="Search"></div>
+            <div class="row mb-3 align-content-end"><input class="form-control ml-auto" type="search" placeholder="Otsing" aria-label="Search"></div>
             <div class="row mb-3 align-content-end"><a href="#description"><button type="button" id="navbar-button-description" class="btn btn-info">Veidi meie restoranist</button></a></div>
             <div class="row"><a href="#menu"><button type="button" class="btn btn-info">Maiuspalade menüü</button></a></div>
         </div>
     </div>
 
-    
     <a href="#description"><button id="to-description" type="button" class="btn btn-primary"><i class="fas fa-arrow-down fa-3x nav-icon"></i></button></a>
 
-    <div id="map" class="container-fluid h-100 leaflet-container leaflet-touch leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom" style="position: relative; outline: currentcolor none medium;" tabindex="0"><div class="leaflet-pane leaflet-map-pane" style="transform: translate3d(0px, -1px, 0px);"><div class="leaflet-pane leaflet-tile-pane"><div class="leaflet-layer " style="z-index: 1; opacity: 1;"><div class="leaflet-tile-container leaflet-zoom-animated" style="z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);"><img alt="" role="presentation" src="Pannkoogid_files/4809_006.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(358px, 496px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4809_018.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(614px, 496px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4810_020.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(358px, 752px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4810_013.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(614px, 752px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4808_018.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(358px, 240px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4808_007.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(614px, 240px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4809_012.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(102px, 496px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4809_015.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(870px, 496px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4810_014.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(102px, 752px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4810_003.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(870px, 752px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4811_017.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(358px, 1008px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4811_002.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(614px, 1008px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4808_012.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(102px, 240px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4808_017.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(870px, 240px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4811_004.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(102px, 1008px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4811_006.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(870px, 1008px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4807_007.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(358px, -16px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4807_005.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(614px, -16px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4809_010.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-154px, 496px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4809.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1126px, 496px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4810_002.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-154px, 752px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4810_009.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1126px, 752px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4812_006.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(358px, 1264px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4812_012.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(614px, 1264px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4807_014.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(102px, -16px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4807_010.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(870px, -16px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4808_009.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-154px, 240px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4808_016.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1126px, 240px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4811_018.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-154px, 1008px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4811_020.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1126px, 1008px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4812_003.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(102px, 1264px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4812.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(870px, 1264px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4807_017.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-154px, -16px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4807_019.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1126px, -16px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4812_015.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-154px, 1264px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4812_005.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1126px, 1264px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4809_003.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-410px, 496px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4809_014.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1382px, 496px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4810_018.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-410px, 752px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4810_011.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1382px, 752px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4808_020.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-410px, 240px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4808_006.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1382px, 240px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4811_014.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-410px, 1008px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4811_016.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1382px, 1008px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4807.html" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(-410px, -16px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4807_002.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1382px, -16px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4812_004.html" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(-410px, 1264px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4812_002.html" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(1382px, 1264px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4809_008.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-666px, 496px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4809_011.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1638px, 496px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4810_005.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-666px, 752px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4810_010.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1638px, 752px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4808_004.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-666px, 240px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4808_013.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1638px, 240px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4811_007.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-666px, 1008px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4811_019.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1638px, 1008px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4807_006.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-666px, -16px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4807_011.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1638px, -16px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4812.html" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(-666px, 1264px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4812_003.html" class="leaflet-tile" style="width: 256px; height: 256px; transform: translate3d(1638px, 1264px, 0px); opacity: 1;"></div></div><div class="leaflet-layer " style="z-index: 1; opacity: 1;"><div class="leaflet-tile-container leaflet-zoom-animated" style="z-index: 20; transform: translate3d(0px, 0px, 0px) scale(1);"><img alt="" role="presentation" src="Pannkoogid_files/4809_004.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(358px, 496px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4809_020.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(614px, 496px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4810_017.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(358px, 752px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4810_006.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(614px, 752px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4808_014.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(358px, 240px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4808_002.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(614px, 240px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4809_009.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(102px, 496px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4809_013.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(870px, 496px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4810_016.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(102px, 752px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4810_015.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(870px, 752px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4811_015.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(358px, 1008px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4811_009.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(614px, 1008px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4808_005.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(102px, 240px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4808.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(870px, 240px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4811_003.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(102px, 1008px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4811_005.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(870px, 1008px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4807_012.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(358px, -16px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4807_009.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(614px, -16px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4809_005.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-154px, 496px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4809_007.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1126px, 496px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4810_019.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-154px, 752px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4810_007.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1126px, 752px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4812_002.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(358px, 1264px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4812_004.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(614px, 1264px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4807_003.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(102px, -16px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4807_008.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(870px, -16px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4808_008.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-154px, 240px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4808_011.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1126px, 240px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4811_008.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-154px, 1008px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4811_010.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1126px, 1008px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4812_010.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(102px, 1264px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4812_009.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(870px, 1264px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4807_018.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-154px, -16px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4807.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1126px, -16px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4812_013.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-154px, 1264px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4812_007.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1126px, 1264px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4809_016.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-410px, 496px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4809_002.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1382px, 496px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4810_008.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-410px, 752px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4810.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1382px, 752px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4808_010.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-410px, 240px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4808_015.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1382px, 240px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4811_011.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-410px, 1008px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4811_012.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1382px, 1008px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4807_015.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-410px, -16px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4807_016.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1382px, -16px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4812_008.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-410px, 1264px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4812_014.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1382px, 1264px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4809_017.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-666px, 496px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4809_019.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1638px, 496px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4810_004.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-666px, 752px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4810_012.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1638px, 752px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4808_003.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-666px, 240px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4808_019.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1638px, 240px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4811.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-666px, 1008px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4811_013.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1638px, 1008px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4807_004.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-666px, -16px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4807_013.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1638px, -16px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4812_011.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-666px, 1264px, 0px); opacity: 1;"><img alt="" role="presentation" src="Pannkoogid_files/4812_016.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1638px, 1264px, 0px); opacity: 1;"></div></div></div><div class="leaflet-pane leaflet-shadow-pane"><img src="Pannkoogid_files/marker-shadow.png" class="leaflet-marker-shadow leaflet-zoom-animated" style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; transform: translate3d(500px, 274px, 0px);" alt=""><img src="Pannkoogid_files/marker-shadow.png" class="leaflet-marker-shadow leaflet-zoom-animated" style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; transform: translate3d(549px, 992px, 0px);" alt=""></div><div class="leaflet-pane leaflet-overlay-pane"></div><div class="leaflet-pane leaflet-marker-pane"><img src="Pannkoogid_files/marker-icon.png" class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(500px, 274px, 0px); z-index: 274;" alt="" tabindex="0"><img src="Pannkoogid_files/marker-icon.png" class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(549px, 992px, 0px); z-index: 992;" alt="" tabindex="0"></div><div class="leaflet-pane leaflet-tooltip-pane"></div><div class="leaflet-pane leaflet-popup-pane"><div class="leaflet-popup  leaflet-zoom-animated" style="opacity: 1; transform: translate3d(550px, 958px, 0px); bottom: -7px; left: -125px;"><div class="leaflet-popup-content-wrapper"><div class="leaflet-popup-content" style="width: 211px;"><div class="popup-title title-font font-weight-bolder">Tondi maja</div><div class="row"><div class="col-6"><img src="Pannkoogid_files/pannkook.svg" class="center-img" width="60px"></div><div class="col-6"><ul style="padding:10px;list-style-type: none;"><li><small>Tondi 66, Tallinn</small></li><li><small>E-R</small></li><li><small>9:00-18:00</small></li></ul></div></div></div></div><div class="leaflet-popup-tip-container"><div class="leaflet-popup-tip"></div></div><a class="leaflet-popup-close-button" href="#close">×</a></div></div><div class="leaflet-proxy leaflet-zoom-animated" style="transform: translate3d(2385410px, 1231260px, 0px) scale(8192);"></div></div><div class="leaflet-control-container"><div class="leaflet-top leaflet-left"></div><div class="leaflet-top leaflet-right"></div><div class="leaflet-bottom leaflet-left"></div><div class="leaflet-bottom leaflet-right"><div class="leaflet-control-attribution leaflet-control"><a href="http://leafletjs.com/" title="A JS library for interactive maps">Leaflet</a> | © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Map tiles by <a href="http://stamen.com/">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> — Map data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors</div></div></div></div>
+    <div id="map" class="container-fluid h-100"></div>
 
     <a href="#menu-1"><button id="to-menu" type="button" class="btn btn-secondary"><i class="fas fa-arrow-down fa-3x nav-icon"></i></button></a>
 
@@ -107,80 +32,49 @@ function TokenSigning() {
         <table id="description-table" class="h-100 w-50 mx-auto">
             <tbody>
                 <tr>
-                    <td><p id="description-title">Parimad koogid sünnivad siin</p><p id="description-text">Lorem
- ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod 
-tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim 
-veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea 
-commodo consequat. Duis aute irure dolor in reprehenderit in voluptate 
-velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint 
-occaecat cupidatat non proident, sunt in culpa qui officia deserunt 
-mollit anim id est laborum.
-
-Incidunt debitis eos architecto ullam atque in explicabo odit delectus 
-et modi, fugit autem tempore, unde temporibus porro molestiae nemo 
-facere, totam dolor corrupti vitae ipsam est tenetur quis, eaque fugit 
-minus optio molestiae. Aut odit dolores sit ullam quod cum rerum modi 
-veniam, commodi non dolor deserunt ad debitis fugiat vero?</p></td>
+                    <td><p id="description-title">Parimad koogid sünnivad siin</p><p id="description-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur cumque ex libero porro repellendus, sed sit tempore vero? At cum delectus deserunt enim, error labore magni nobis quae vero voluptas.</p></td>
                 </tr>
             </tbody>
         </table>
     </div>
 
-    
-    <div id="menu-1" class="container-fluid menu even h-100">
+    <div id='menu-1' class="container-fluid menu even h-100">
         <div class="row">
             <div class="col-6">
-                <img src="Pannkoogid_files/pannkook_soolane.svg" alt="" class="img-700 mx-auto">
+                <img src="static/images/pannkook_soolane.svg" alt="" class="img-700 mx-auto">
             </div>
             <div class="col-6">
                 <table class=" h-100 w-75">
                     <tbody>
                         <tr>
                             <td>
-                                <span class="title-font item-title title-even">Sichuani pipar ehk fagara</span>
+                                <span class="title-font item-title title-even">Soolased pannkoogid</span>
                                 <table class="w-75 menu-table">
                                     <tbody>
-                                        
-                                        <tr><td class="item-food-title">Pasta</td>
+
+                                        <tr>
+                                            <td class="item-food-title">Pasta</td>
                                             <td class="item-price">8.00€</td>
                                         </tr>
-                                        
                                         <tr><td class="item-food-title">Itaalia vein</td>
-                                            <td class="item-price">8.00€</td>
+                                            <td class="item-price">4.00€</td>
                                         </tr>
-                                        
-                                        <tr><td class="item-food-title">Oapastad</td>
-                                            <td class="item-price">5.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Harissa</td>
-                                            <td class="item-price">3.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Antipasto</td>
-                                            <td class="item-price">8.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Joogid</td>
+                                        <tr>
+                                            <td class="item-food-title">Oapastad</td>
                                             <td class="item-price">2.00€</td>
                                         </tr>
-                                        
-                                        <tr><td class="item-food-title">Jajik</td>
-                                            <td class="item-price">7.00€</td>
+                                        <tr><td class="item-food-title">Harissa</td>
+                                            <td class="item-price">4.00€</td>
                                         </tr>
-                                        
+                                        <tr>
+                                            <td class="item-food-title">Antipasto</td>
+                                            <td class="item-price">21.00€</td>
+                                        </tr>
                                         <tr><td class="item-food-title">Ishkhan</td>
-                                            <td class="item-price">5.00€</td>
+                                            <td class="item-price">18.00€</td>
                                         </tr>
-                                        
-                                        <tr><td class="item-food-title">Kalatoit</td>
-                                            <td class="item-price">6.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Mango</td>
-                                            <td class="item-price">6.00€</td>
-                                        </tr>
-                                        
+
+
                                     </tbody>
                                 </table>
                             </td>
@@ -193,61 +87,41 @@ veniam, commodi non dolor deserunt ad debitis fugiat vero?</p></td>
             <a href="#menu-2" class="mx-auto menu-arrow"><button type="button" class="btn btn-secondary menu-number-down"><i class="fas fa-arrow-down fa-3x nav-icon"></i></button></a>
         </div>
     </div>
-    
-    <div id="menu-2" class="container-fluid menu odd h-100">
+
+    <div id='menu-2' class="container-fluid menu odd h-100">
         <div class="row">
             <div class="col-6">
-                <img src="Pannkoogid_files/pannkook_soolane.svg" alt="" class="img-700 mx-auto">
+                <img src="static/images/pannkook_soolane.svg" alt="" class="img-700 mx-auto">
             </div>
             <div class="col-6">
                 <table class=" h-100 w-75">
                     <tbody>
                         <tr>
                             <td>
-                                <span class="title-font item-title title-odd">Itaalia riisiroad</span>
+                                <span class="title-font item-title title-odd">Magusad pannkoogid</span>
                                 <table class="w-75 menu-table">
                                     <tbody>
-                                        
-                                        <tr><td class="item-food-title">Musaka</td>
-                                            <td class="item-price">7.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Basturma</td>
-                                            <td class="item-price">2.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Itaalia liharoad</td>
-                                            <td class="item-price">6.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Riisivein</td>
+                                        <tr>
+                                            <td class="item-food-title">Pasta</td>
                                             <td class="item-price">8.00€</td>
                                         </tr>
-                                        
-                                        <tr><td class="item-food-title">Pasta</td>
-                                            <td class="item-price">3.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Pahlava</td>
-                                            <td class="item-price">3.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Itaalia juust</td>
-                                            <td class="item-price">9.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Itaalia supid ja kastmed</td>
+                                        <tr><td class="item-food-title">Itaalia vein</td>
                                             <td class="item-price">4.00€</td>
                                         </tr>
-                                        
-                                        <tr><td class="item-food-title">Riisivein</td>
-                                            <td class="item-price">7.00€</td>
+                                        <tr>
+                                            <td class="item-food-title">Oapastad</td>
+                                            <td class="item-price">2.00€</td>
                                         </tr>
-                                        
-                                        <tr><td class="item-food-title">Porrulauk</td>
-                                            <td class="item-price">6.00€</td>
+                                        <tr><td class="item-food-title">Harissa</td>
+                                            <td class="item-price">4.00€</td>
                                         </tr>
-                                        
+                                        <tr>
+                                            <td class="item-food-title">Antipasto</td>
+                                            <td class="item-price">21.00€</td>
+                                        </tr>
+                                        <tr><td class="item-food-title">Ishkhan</td>
+                                            <td class="item-price">18.00€</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </td>
@@ -260,262 +134,41 @@ veniam, commodi non dolor deserunt ad debitis fugiat vero?</p></td>
             <a href="#menu-3" class="mx-auto menu-arrow"><button type="button" class="btn btn-secondary menu-number-down"><i class="fas fa-arrow-down fa-3x nav-icon"></i></button></a>
         </div>
     </div>
-    
-    <div id="menu-3" class="container-fluid menu even h-100">
+
+    <div id='menu-3' class="container-fluid menu even h-100">
         <div class="row">
             <div class="col-6">
-                <img src="Pannkoogid_files/pannkook_soolane.svg" alt="" class="img-700 mx-auto">
+                <img src="static/images/pannkook_soolane.svg" alt="" class="img-700 mx-auto">
             </div>
             <div class="col-6">
                 <table class=" h-100 w-75">
                     <tbody>
                         <tr>
                             <td>
-                                <span class="title-font item-title title-even">Soe või külm lihatoit</span>
+                                <span class="title-font item-title title-even">Sichuani pipar</span>
                                 <table class="w-75 menu-table">
                                     <tbody>
-                                        
-                                        <tr><td class="item-food-title">Riisiäädikas</td>
-                                            <td class="item-price">3.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Tšillipasta</td>
-                                            <td class="item-price">9.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Itaalia kalaroad</td>
-                                            <td class="item-price">6.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Kalatoit</td>
-                                            <td class="item-price">7.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Pasta</td>
-                                            <td class="item-price">6.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Üks</td>
-                                            <td class="item-price">9.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Mantua</td>
-                                            <td class="item-price">7.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Itaalia juust</td>
-                                            <td class="item-price">3.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Vesikastanid ehk vesialss</td>
-                                            <td class="item-price">3.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Magustoit</td>
-                                            <td class="item-price">7.00€</td>
-                                        </tr>
-                                        
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="row">
-            <a href="#menu-4" class="mx-auto menu-arrow"><button type="button" class="btn btn-secondary menu-number-down"><i class="fas fa-arrow-down fa-3x nav-icon"></i></button></a>
-        </div>
-    </div>
-    
-    <div id="menu-4" class="container-fluid menu odd h-100">
-        <div class="row">
-            <div class="col-6">
-                <img src="Pannkoogid_files/pannkook_soolane.svg" alt="" class="img-700 mx-auto">
-            </div>
-            <div class="col-6">
-                <table class=" h-100 w-75">
-                    <tbody>
-                        <tr>
-                            <td>
-                                <span class="title-font item-title title-odd">Magustoit</span>
-                                <table class="w-75 menu-table">
-                                    <tbody>
-                                        
-                                        <tr><td class="item-food-title">Tšillipasta</td>
-                                            <td class="item-price">3.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Joogid</td>
-                                            <td class="item-price">5.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Tofu</td>
-                                            <td class="item-price">7.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Ingver</td>
-                                            <td class="item-price">4.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Brescia</td>
-                                            <td class="item-price">7.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Brescia</td>
-                                            <td class="item-price">5.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Itaalia supid ja kastmed</td>
-                                            <td class="item-price">3.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Munatoit</td>
-                                            <td class="item-price">4.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Sichuani pipar ehk fagara</td>
-                                            <td class="item-price">3.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Tofu</td>
-                                            <td class="item-price">6.00€</td>
-                                        </tr>
-                                        
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="row">
-            <a href="#menu-5" class="mx-auto menu-arrow"><button type="button" class="btn btn-secondary menu-number-down"><i class="fas fa-arrow-down fa-3x nav-icon"></i></button></a>
-        </div>
-    </div>
-    
-    <div id="menu-5" class="container-fluid menu even h-100">
-        <div class="row">
-            <div class="col-6">
-                <img src="Pannkoogid_files/pannkook_soolane.svg" alt="" class="img-700 mx-auto">
-            </div>
-            <div class="col-6">
-                <table class=" h-100 w-75">
-                    <tbody>
-                        <tr>
-                            <td>
-                                <span class="title-font item-title title-even">Joogid</span>
-                                <table class="w-75 menu-table">
-                                    <tbody>
-                                        
-                                        <tr><td class="item-food-title">Kala</td>
+                                        <tr>
+                                            <td class="item-food-title">Pasta</td>
                                             <td class="item-price">8.00€</td>
                                         </tr>
-                                        
-                                        <tr><td class="item-food-title">Porrulauk</td>
-                                            <td class="item-price">8.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Üks</td>
+                                        <tr><td class="item-food-title">Itaalia vein</td>
                                             <td class="item-price">4.00€</td>
                                         </tr>
-                                        
-                                        <tr><td class="item-food-title">Sichuani pipar ehk fagara</td>
-                                            <td class="item-price">3.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Halvaa</td>
+                                        <tr>
+                                            <td class="item-food-title">Oapastad</td>
                                             <td class="item-price">2.00€</td>
                                         </tr>
-                                        
-                                        <tr><td class="item-food-title">Salat</td>
-                                            <td class="item-price">2.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Liha</td>
-                                            <td class="item-price">9.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Halvaa</td>
-                                            <td class="item-price">4.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Levinumad pizzad</td>
-                                            <td class="item-price">9.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Musaka</td>
-                                            <td class="item-price">3.00€</td>
-                                        </tr>
-                                        
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="row">
-            <a href="#menu-6" class="mx-auto menu-arrow"><button type="button" class="btn btn-secondary menu-number-down"><i class="fas fa-arrow-down fa-3x nav-icon"></i></button></a>
-        </div>
-    </div>
-    
-    <div id="menu-6" class="container-fluid menu odd h-100">
-        <div class="row">
-            <div class="col-6">
-                <img src="Pannkoogid_files/pannkook_soolane.svg" alt="" class="img-700 mx-auto">
-            </div>
-            <div class="col-6">
-                <table class=" h-100 w-75">
-                    <tbody>
-                        <tr>
-                            <td>
-                                <span class="title-font item-title title-odd">Itaalia kohv</span>
-                                <table class="w-75 menu-table">
-                                    <tbody>
-                                        
-                                        <tr><td class="item-food-title">Levinumad pizzad</td>
-                                            <td class="item-price">3.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Musaka</td>
-                                            <td class="item-price">8.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Cremona</td>
-                                            <td class="item-price">3.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Brescia</td>
-                                            <td class="item-price">5.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Sondrio</td>
-                                            <td class="item-price">6.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Basturma</td>
-                                            <td class="item-price">8.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Austrikaste</td>
-                                            <td class="item-price">2.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Halvaa</td>
-                                            <td class="item-price">8.00€</td>
-                                        </tr>
-                                        
                                         <tr><td class="item-food-title">Harissa</td>
-                                            <td class="item-price">8.00€</td>
+                                            <td class="item-price">4.00€</td>
                                         </tr>
-                                        
-                                        <tr><td class="item-food-title">Tofu</td>
-                                            <td class="item-price">3.00€</td>
+                                        <tr>
+                                            <td class="item-food-title">Antipasto</td>
+                                            <td class="item-price">21.00€</td>
                                         </tr>
-                                        
+                                        <tr><td class="item-food-title">Ishkhan</td>
+                                            <td class="item-price">18.00€</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </td>
@@ -525,80 +178,9 @@ veniam, commodi non dolor deserunt ad debitis fugiat vero?</p></td>
             </div>
         </div>
         <div class="row">
-            <a href="#menu-7" class="mx-auto menu-arrow"><button type="button" class="btn btn-secondary menu-number-down"><i class="fas fa-arrow-down fa-3x nav-icon"></i></button></a>
+            <a href="#description" class="mx-auto menu-arrow"><button type="button" class="btn btn-secondary menu-number-down"><i class="fas fa-arrow-down fa-3x nav-icon"></i></button></a>
         </div>
     </div>
-    
-    <div id="menu-7" class="container-fluid menu even h-100">
-        <div class="row">
-            <div class="col-6">
-                <img src="Pannkoogid_files/pannkook_soolane.svg" alt="" class="img-700 mx-auto">
-            </div>
-            <div class="col-6">
-                <table class=" h-100 w-75">
-                    <tbody>
-                        <tr>
-                            <td>
-                                <span class="title-font item-title title-even">Joogid</span>
-                                <table class="w-75 menu-table">
-                                    <tbody>
-                                        
-                                        <tr><td class="item-food-title">Seesamiseemned</td>
-                                            <td class="item-price">9.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Piimatooted</td>
-                                            <td class="item-price">5.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Pita</td>
-                                            <td class="item-price">6.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Itaalia riisiroad</td>
-                                            <td class="item-price">5.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Tofu</td>
-                                            <td class="item-price">2.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Jajik</td>
-                                            <td class="item-price">9.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Riis</td>
-                                            <td class="item-price">3.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Aedviljatoit</td>
-                                            <td class="item-price">2.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Bergamo</td>
-                                            <td class="item-price">9.00€</td>
-                                        </tr>
-                                        
-                                        <tr><td class="item-food-title">Musaka</td>
-                                            <td class="item-price">2.00€</td>
-                                        </tr>
-                                        
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="row">
-            <a href="#menu-8" class="mx-auto menu-arrow"><button type="button" class="btn btn-secondary menu-number-down"><i class="fas fa-arrow-down fa-3x nav-icon"></i></button></a>
-        </div>
-    </div>
-    
-
-
-
 
     <div id="footer">
         <p id="footer-center" class="title-font">
@@ -611,13 +193,11 @@ veniam, commodi non dolor deserunt ad debitis fugiat vero?</p></td>
     </div>
 
 
-    <script src="Pannkoogid_files/jquery-3.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="Pannkoogid_files/popper.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="Pannkoogid_files/bootstrap.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-    
-    <script src="Pannkoogid_files/leaflet.js"></script>
-    <script src="Pannkoogid_files/leaflet-providers.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+    <script src="static/js/leaflet-providers.js"></script>
     <script>
         var map = L.map('map',{
             scrollWheelZoom: false,
@@ -630,10 +210,10 @@ veniam, commodi non dolor deserunt ad debitis fugiat vero?</p></td>
         }).addTo(map);
 
         L.marker([59.443573, 24.73144]).addTo(map)
-            .bindPopup('<div class="popup-title title-font font-weight-bolder">Pärnu maantee maja</div><div class="row"><div class="col-6"><img src="/static/images/pannkook.svg" width="60px" class="center-img"></div><div class="col-6"><ul style="padding:10px;list-style-type: none;"><li><small>Pärnu maantee 99, Tallinn</small></li><li><small>E-R</small></li><li><small>9:00-18:00</small></li></ul></div></div>')
+            .bindPopup('<div class="popup-title title-font font-weight-bolder">Pärnu maantee maja</div><div class="row"><div class="col-6"><img src="static/images/pannkook.svg" width="60px" class="center-img"></div><div class="col-6"><ul style="padding:10px;list-style-type: none;"><li><small>Pärnu maantee 99, Tallinn</small></li><li><small>E-R</small></li><li><small>9:00-18:00</small></li></ul></div></div>')
             .openPopup();
         L.marker([59.412264, 24.73559]).addTo(map)
-            .bindPopup('<div class="popup-title title-font font-weight-bolder">Tondi maja</div><div class="row"><div class="col-6"><img src="/static/images/pannkook.svg" width="60px" class="center-img"></div><div class="col-6"><ul style="padding:10px;list-style-type: none;"><li><small>Tondi 66, Tallinn</small></li><li><small>E-R</small></li><li><small>9:00-18:00</small></li></ul></div></div>',)
+            .bindPopup('<div class="popup-title title-font font-weight-bolder">Tondi maja</div><div class="row"><div class="col-6"><img src="static/images/pannkook.svg" width="60px" class="center-img"></div><div class="col-6"><ul style="padding:10px;list-style-type: none;"><li><small>Tondi 66, Tallinn</small></li><li><small>E-R</small></li><li><small>9:00-18:00</small></li></ul></div></div>',)
             .openPopup();
         L.tileLayer.provider('Stamen.TonerLite').addTo(map);
 
@@ -641,6 +221,5 @@ veniam, commodi non dolor deserunt ad debitis fugiat vero?</p></td>
              position:'middleleft'
         }).addTo(map);
     </script>
-
-
-</body></html>
+</body>
+</html>
