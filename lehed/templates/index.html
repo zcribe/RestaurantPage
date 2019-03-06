@@ -2,39 +2,35 @@
 {% load static %}
 
 {% block content %}
+    <a href="#description"><button id="to-description" type="button" class="btn btn-primary"><i class="fas fa-arrow-down fa-3x nav-icon"></i></button></a>
 
+    <div id="map" class="container-fluid h-100"></div>
 
-    <div id="map" class="container-fluid h-100">
-        <div class="nav-arrow"><a href="#description"><i class="fas fa-arrow-circle-down fa-3x nav-icon"></i></a></div>
-    </div>
-
+    <a href="#menu-1"><button id="to-menu" type="button" class="btn btn-secondary"><i class="fas fa-arrow-down fa-3x nav-icon"></i></button></a>
 
     <div id="description" class="container-fluid h-100">
         <table id="description-table" class="h-100 w-50 mx-auto">
             <tbody>
                 <tr>
-                    <td class="pr-5 text-secondary"><button type="button" class="btn btn-secondary"><i class="fas fa-arrow-left fa-2x"></i></button></td>
-                    <td><p id="description-title">Parimad koogid sünnivad siin</p><p id="description-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, aliquid architecto cupiditate eos error expedita facere, incidunt inventore iure officia unde voluptatibus voluptatum. Commodi, expedita nam pariatur saepe tenetur vero!</p></td>
-                    <td class="pl-5 text-secondary"><button type="button" class="btn btn-secondary"><i class="fas fa-arrow-right fa-2x"></i></button></td>
+                    <td><p id="description-title">Parimad koogid sünnivad siin</p><p id="description-text">{% lorem 2 %}</p></td>
                 </tr>
             </tbody>
         </table>
     </div>
 
     {% for category in menuitemcategory_list %}
-    <div class="container-fluid h-100 menu {% cycle 'even' 'odd' %}">
-        <div class="nav-arrow"><a href="#description" ><i class="fas fa-arrow-circle-up fa-3x nav-icon"></i></a></div>
+    <div id='menu-{{ forloop.counter }}' class="container-fluid menu {% cycle 'even' 'odd' %} h-100">
         <div class="row">
             <div class="col-6">
-                <img src="{% static "images/pannkook.svg" %}" alt="" class="img-fluid">
+                <img src="{% static "images/pannkook_soolane.svg" %}" alt="" class="img-700 mx-auto">
             </div>
             <div class="col-6">
-                <table class="h-100 w-75">
+                <table class=" h-100 w-75">
                     <tbody>
                         <tr>
                             <td>
-                                <span class="title-font item-title">{{ category.title }}</span>
-                                <table class=" w-75 menu-table">
+                                <span class="title-font item-title {% cycle 'title-even' 'title-odd' %}">{{ category.title }}</span>
+                                <table class="w-75 menu-table">
                                     <tbody>
                                         {% for item in category.menuitem_set.all %}
                                         <tr><td class="item-food-title">{{ item.title }}</td>
@@ -48,7 +44,9 @@
                     </tbody>
                 </table>
             </div>
-            
+        </div>
+        <div class="row">
+            <a href="#menu-{{ forloop.counter|add:"1" }}" class="mx-auto menu-arrow"><button type="button" class="btn btn-secondary menu-number-down"><i class="fas fa-arrow-down fa-3x nav-icon"></i></button></a>
         </div>
     </div>
     {% endfor %}
@@ -61,6 +59,7 @@
     <script>
         var map = L.map('map',{
             scrollWheelZoom: false,
+            zoomControl: false,
             layers:[]
         }).setView([59.426962, 24.741554], 14);
 
@@ -69,11 +68,15 @@
         }).addTo(map);
 
         L.marker([59.443573, 24.73144]).addTo(map)
-            .bindPopup('Pärnu maantee 146, Tallinn')
+            .bindPopup('<div class="popup-title title-font font-weight-bolder">Pärnu maantee maja</div><div class="row"><div class="col-6"><img src="{% static "images/pannkook.svg" %}" width="60px" class="center-img"></div><div class="col-6"><ul style="padding:10px;list-style-type: none;"><li><small>Pärnu maantee 99, Tallinn</small></li><li><small>E-R</small></li><li><small>9:00-18:00</small></li></ul></div></div>')
             .openPopup();
         L.marker([59.412264, 24.73559]).addTo(map)
-            .bindPopup('Tondi 17, Tallinn')
+            .bindPopup('<div class="popup-title title-font font-weight-bolder">Tondi maja</div><div class="row"><div class="col-6"><img src="{% static "images/pannkook.svg" %}" width="60px" class="center-img"></div><div class="col-6"><ul style="padding:10px;list-style-type: none;"><li><small>Tondi 66, Tallinn</small></li><li><small>E-R</small></li><li><small>9:00-18:00</small></li></ul></div></div>',)
             .openPopup();
         L.tileLayer.provider('Stamen.TonerLite').addTo(map);
+
+        L.control.zoom({
+             position:'middleleft'
+        }).addTo(map);
     </script>
 {% endblock javascript %}
